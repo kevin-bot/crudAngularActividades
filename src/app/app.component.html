@@ -11,17 +11,17 @@
 
     <div class="col-sm-8"> <!--Columna que contiene el titulo-->
 
-        <h1 class="text-center">Titulo</h1> <!--Titulo con una clase de bootstrap para centrar el texto-->
+    <h1 class="text-center">{{title}}</h1> <!--Titulo con una clase de bootstrap para centrar el texto-->
 
     </div>
 
     <div class="col-sm-4"> <!--Columna que contiene el una alerta que se muestra al momento de ejecutar una accion-->
 
-        <div class="alert alert-success alert-dismissable">
+        <div class="alert alert-success alert-dismissable"  *ngIf = "mensajeAlerta">
 
-          <a href="#" class="close">&times;</a> <!-- Etiqueta que permite mostrar un enlace con una X para cerrar la notificacion -->
+          <a href="#" class="close" (click) = "cerrarAlerta()">&times;</a> <!-- Etiqueta que permite mostrar un enlace con una X para cerrar la notificacion -->
               
-              Mensaje aqui <!--Mensaje que cambia segun la opcion que de hace el el crud-->
+              {{mensajeAlerta}} <!--Mensaje que cambia segun la opcion que de hace el el crud-->
 
         </div>
     </div>
@@ -46,7 +46,8 @@
 
               <div class="col-sm-10"> <!--Columna que tiene 10 espacios contiene la caja de texto -->
 
-                <input type="text" class="form-control" id="name" placeholder="Introdusca su nombre" name="name">
+                <input type="text" class="form-control" id="name" placeholder="Introdusca su nombre" name="name"
+                        [(ngModel)]  = "modelo.nombre">
 
               </div>
 
@@ -62,7 +63,8 @@
 
               <div class="col-sm-10">
 
-                <input type="text" class="form-control" id="cargo" name="cargo" placeholder="Introdusca un cargo" >
+                <input type="text" class="form-control" id="cargo" name="cargo" placeholder="Introdusca un cargo"
+                        [(ngModel)] = "modelo.cargo" >
 
               </div>
               
@@ -77,7 +79,8 @@
                 </label>
 
               <div class="col-sm-10">
-                  <input type="text" class="form-control" id="email" name="email" placeholder="Introdusca un email">                
+                  <input type="text" class="form-control" id="email" name="email" placeholder="Introdusca un email"
+                          [(ngModel)] = "modelo.email">                
               </div>
 
             </div>
@@ -86,7 +89,7 @@
 
               <div class="col-sm-10 col-sm-offset-2">
 
-                <button type="submit" class="btn btn-success">Guardar</button>
+                <button type="submit" class="btn btn-success" (click) = "addpersona()">Guardar</button>
 
               </div>
 
@@ -125,15 +128,17 @@
 
         <tbody>
 
-          <tr>
-            <th>a</th>
-            <th>a</th>
-            <th>a</th>
+          <tr *ngFor = "let mipersona of personas; let i = index">
+
+            <th>{{mipersona.nombre}}</th>
+            <th>{{mipersona.cargo}}</th>
+            <th>{{mipersona.email}}</th>
 
             <th>
 
-              <button class="btn btn-success">Editar</button>
-              <button class="btn btn-danger m-2">Eliminar</button>
+              <button class="btn btn-success" (click)= "editarPersona(i)">Editar</button>
+              <button class="btn btn-danger m-2" (click) = "eliminarPersona(i)">Eliminar</button>
+
             </th>
 
           </tr>
@@ -143,7 +148,7 @@
       </table>
     </div>
 
-    <div class="col-sm-4"> <!-- Columna con el formulario de actualizar -->
+    <div class="col-sm-4" [hidden] = "mostarformEditar"> <!-- Columna con el formulario de actualizar -->
 
       <h2>Actualizar datos:</h2>
 
@@ -159,7 +164,7 @@
 
           <div class="col-sm-10">
 
-            <input type="text" class="form-control" id="name" name="name" placeholder="Nombre">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" [(ngModel)] ="modelo2.nombre">
           </div>
           
         </div>
@@ -173,7 +178,7 @@
 
           <div class="col-sm-10">
 
-            <input type="text" class="form-control" name="cargo" id="cargo" placeholder="Cargo">
+            <input type="text" class="form-control" name="cargo" id="cargo" placeholder="Cargo" [(ngModel)] ="modelo2.cargo">
 
           </div>
 
@@ -188,7 +193,7 @@
           </label>
 
           <div class="col-sm-10">
-              <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+              <input type="text" class="form-control" name="email" id="email" placeholder="Email" [(ngModel)] ="modelo2.email">
           </div>
 
         </div>
@@ -196,7 +201,7 @@
         <div class="form-group">
           <div class="col-sm-10 col-sm-offset-2"></div>
           
-          <button type="submit" class="btn btn-success">Actualizar</button>
+          <button type="submit" class="btn btn-success" (click) = "adtualizarPersona()">Actualizar</button>
 
         </div>
 
